@@ -13,12 +13,16 @@ if(fs.existsSync(statePath)){ try{ state=JSON.parse(fs.readFileSync(statePath,'u
 const contacted=[];
 if(fs.existsSync(outreachLog)){
   for(const line of fs.readFileSync(outreachLog,'utf8').split(/\n/).filter(Boolean)){
-    try{ const j=JSON.parse(line); if(j.email) contacted.push(j.email.toLowerCase()); }catch{}
+    try{ const j=JSON.parse(line); if(j.email && j.status === 'sent') contacted.push(j.email.toLowerCase()); }catch{}
   }
 }
 if(dry){ console.log(JSON.stringify({statePath,outreachLog,contacted:contacted.length,dryRun:true}, null, 2)); process.exit(0); }
 const query = 'SaaS Homepage Teardown OR "homepage teardown" OR "sample report" OR "no"';
-const res = spawnSync('himalaya', ['envelope','list','--page-size','50'], {encoding:'utf8'});
+const res = spawnSync('/usr/local/bin/himalaya', ['envelope','list','--page-size','50'], {encoding:'utf8', timeout:30000});
+if (res.error && res.error.code === 'ETIMEDOUT') {
+  console.log(JSON.stringify({checked:false, error:'himalaya envelope list timed out', contacted:contacted.length, statePath}, null, 2));
+  process.exit(0);
+}
 const output = (res.stdout || '') + (res.stderr || '');
 const hits=[];
 for(const email of contacted){

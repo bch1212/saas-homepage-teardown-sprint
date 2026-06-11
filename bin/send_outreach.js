@@ -9,7 +9,7 @@ const sentEmails = new Set();
 fs.mkdirSync(path.dirname(logPath), {recursive:true});
 if (fs.existsSync(logPath)) {
   for (const line of fs.readFileSync(logPath,'utf8').split(/\n/).filter(Boolean)) {
-    try { const j = JSON.parse(line); if (j.email) sentEmails.add(j.email.toLowerCase()); } catch {}
+    try { const j = JSON.parse(line); if (j.email && j.status === 'sent') sentEmails.add(j.email.toLowerCase()); } catch {}
   }
 }
 function parseCSV(text){
@@ -40,7 +40,8 @@ for(const p of rows){
     console.log(`DRY ${email} ${subject}`);
     continue;
   }
-  const res = spawnSync('himalaya', ['message','send','--to',email,'--subject',subject], {input:body, encoding:'utf8'});
+  const raw = `From: Brett Halverson <brett@vikinetic.com>\nTo: ${email}\nSubject: ${subject}\nContent-Type: text/plain; charset=utf-8\n\n${body}`;
+  const res = spawnSync('himalaya', ['message','send'], {input:raw, encoding:'utf8'});
   const rec = {ts:new Date().toISOString(), company:p.company, email, subject, status:res.status===0?'sent':'error', returncode:res.status, stdout:res.stdout, stderr:res.stderr};
   fs.appendFileSync(logPath, JSON.stringify(rec)+'\n');
   if(res.status===0) sent++; else errors++;

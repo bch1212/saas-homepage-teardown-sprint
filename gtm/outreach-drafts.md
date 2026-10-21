@@ -14,8 +14,8 @@ Want me to send a sample report format, or should I look at {{company}} as one o
 
 No pressure either way — reply `no` and I won’t follow up.
 
-Brett
-https://bch1212.github.io/saas-homepage-teardown-sprint/
+Alex Example
+https://example.com/
 
 ## Variant B — sample-first
 
@@ -31,7 +31,7 @@ Want me to send the sample report format so you can see whether it’s useful?
 
 Reply `no` if this is not relevant and I won’t follow up.
 
-Brett
+Alex Example
 
 ## Variant C — launch/traffic angle
 
@@ -47,4 +47,4 @@ Interested in a sample, or should I send the intake questions?
 
 No pressure — reply `no` and I’ll leave you alone.
 
-Brett
+Alex Example

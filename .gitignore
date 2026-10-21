@@ -1,0 +1,28 @@
+# Local secrets and environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local databases
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+
+# Prospect research exports. Keep the fictional sample.
+*prospect*.csv
+!samples/sample-prospects.csv
+
+# Local runtime output (may contain contact addresses)
+logs/
+*.log
+
+# OS and dependencies
+.DS_Store
+Thumbs.db
+node_modules/

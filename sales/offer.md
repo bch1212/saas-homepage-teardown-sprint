@@ -42,5 +42,5 @@ Want me to send a sample report format, or should I look at {{company}} as one o
 
 No pressure either way — reply `no` and I won’t follow up.
 
-Brett
-https://bch1212.github.io/saas-homepage-teardown-sprint/
+Alex Example
+https://example.com/

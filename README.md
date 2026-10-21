@@ -40,17 +40,22 @@ Non-goals:
 - `templates/client-intake.md` — buyer intake template.
 - `sales/offer.md` — offer and outreach positioning.
 - `gtm/outreach-drafts.md` — outreach copy variants.
-- `b2b_saas_ai_homepage_teardown_prospects.csv` — researched prospect list.
+- `samples/sample-prospects.csv` — fictional prospect sample (`example.com` / `example.org` only).
 - `bin/generate_report.js` — minimal report generator.
-- `bin/send_outreach.js` — low-volume outreach sender via Himalaya.
+- `bin/send_outreach.js` — low-volume outreach sender via Himalaya. Reads `PROSPECTS_CSV` or `--csv=` (default: the sample file).
 - `bin/check_replies.js` — reply/bounce watcher.
+- `.env.example` — sender and prospect-path placeholders. Copy to `.env` locally; do not commit `.env`.
 
 ## Local verification
+
+Landing-page and outreach copy use `example.com` placeholders. Set your own contact address, plus `FROM_NAME`, `FROM_EMAIL`, and `PUBLIC_SITE_URL`, before a live send. Keep real prospect exports out of git; point `PROSPECTS_CSV` or `--csv=` at a local file.
 
 ```bash
 node bin/generate_report.js samples/sample-input.json reports/generated-sample-report.md
 node bin/check_replies.js --dry-run
-zip -r saas-homepage-teardown-sprint-kit.zip README.md index.html samples templates sales gtm reports bin b2b_saas_ai_homepage_teardown_prospects.csv
+node bin/send_outreach.js --dry-run --max=2
+rm -f saas-homepage-teardown-sprint-kit.zip
+zip -r saas-homepage-teardown-sprint-kit.zip README.md index.html samples templates sales gtm reports bin .gitignore .env.example
 shasum -a 256 saas-homepage-teardown-sprint-kit.zip
 ```
 
